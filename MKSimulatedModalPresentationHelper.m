@@ -12,8 +12,8 @@
 
 @property (nonatomic) BOOL shouldBeDisplayed;
 
-@property (nonatomic, strong) UIColor* internalBackgroundControlColor;
 @property (nonatomic) CGPoint internalAnimation_Displayed_Center;
+@property (nonatomic, strong) UIColor* internalBackgroundControlColor;
 
 #pragma mark - Constraints
 
