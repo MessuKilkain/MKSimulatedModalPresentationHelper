@@ -185,6 +185,7 @@
         UIControl* backgroundControl = [UIControl autoLayoutView];
         [self setBackgroundControl:backgroundControl];
         [self addSubview:backgroundControl];
+        [backgroundControl setUserInteractionEnabled:[self isDismissFromBackgroundControlAllowed]];
         [backgroundControl pinToSuperviewEdges:(JRTViewPinAllEdges) inset:0];
 #if !TARGET_OS_TV
         [backgroundControl addTarget:self action:@selector(backgroundControlTriggered) forControlEvents:(UIControlEventTouchUpInside)];
@@ -232,6 +233,13 @@
 -(void)setDismissFromBackgroundControlAllowed:(BOOL)dismissFromBackgroundControlAllowed
 {
     [self setInternalDismissFromBackgroundControlAllowed:dismissFromBackgroundControlAllowed];
+    if(
+       [self backgroundControl] != nil
+       && [self shouldBeDisplayed] // NOTE : Change user interaction enability if the control should be shown
+       )
+    {
+        [[self backgroundControl] setUserInteractionEnabled:[self isDismissFromBackgroundControlAllowed]];
+    }
 }
 
 #pragma mark - Contained controller
@@ -390,7 +398,7 @@
     [self setShouldBeDisplayed:YES];
     if( [self backgroundControl] != nil )
     {
-        [[self backgroundControl] setUserInteractionEnabled:YES];
+        [[self backgroundControl] setUserInteractionEnabled:[self isDismissFromBackgroundControlAllowed]];
     }
     if( [self containedControllerParentView] != nil )
     {
