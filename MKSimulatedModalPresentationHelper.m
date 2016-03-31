@@ -12,6 +12,8 @@
 
 @property (nonatomic) BOOL shouldBeDisplayed;
 
+@property (nonatomic) BOOL internalDismissFromBackgroundControlAllowed;
+
 @property (nonatomic) BOOL internalUseBlurEffect;
 @property (nonatomic) UIBlurEffectStyle internalBlurEffectStyle;
 @property (nonatomic) CGPoint internalAnimation_Displayed_Center;
@@ -221,6 +223,15 @@
     {
         [[self containedController] dismissFromSimulatedModalPresentationHelper];
     }
+}
+
+-(BOOL)isDismissFromBackgroundControlAllowed
+{
+    return [self internalDismissFromBackgroundControlAllowed];
+}
+-(void)setDismissFromBackgroundControlAllowed:(BOOL)dismissFromBackgroundControlAllowed
+{
+    [self setInternalDismissFromBackgroundControlAllowed:dismissFromBackgroundControlAllowed];
 }
 
 #pragma mark - Contained controller
