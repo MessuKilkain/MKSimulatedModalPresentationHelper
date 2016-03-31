@@ -311,9 +311,16 @@
 
 -(void)playAnimationShowWithCompletionBlock:(void (^ __nullable)(BOOL finished))completion
 {
+    if( [self backgroundControl] != nil )
+    {
+        [[self backgroundControl] setUserInteractionEnabled:YES];
+    }
+    if( [self containedControllerParentView] != nil )
+    {
+        [[self containedControllerParentView] setUserInteractionEnabled:YES];
+    }
     if( [self animation_Show_Duration] > 0 )
     {
-        [self setUserInteractionEnabled:YES];
         if( [self containedControllerParentView_Constraint_CenterX] != nil )
         {
             [[self containedControllerParentView_Constraint_CenterX] setConstant:[self animation_Hidden_Center].x];
@@ -367,7 +374,6 @@
     }
     else
     {
-        [self setUserInteractionEnabled:YES];
         if( [self containedControllerParentView_Constraint_CenterX] != nil )
         {
             [[self containedControllerParentView_Constraint_CenterX] setConstant:[self animation_Displayed_Center].x];
@@ -400,9 +406,16 @@
 }
 -(void)playAnimationHideWithCompletionBlock:(void (^ __nullable)(BOOL finished))completion
 {
+    if( [self backgroundControl] != nil )
+    {
+        [[self backgroundControl] setUserInteractionEnabled:NO];
+    }
+    if( [self containedControllerParentView] != nil )
+    {
+        [[self containedControllerParentView] setUserInteractionEnabled:NO];
+    }
     if( [self animation_Hide_Duration] > 0 )
     {
-        [self setUserInteractionEnabled:NO];
         if( [self backgroundControl] != nil )
         {
             [[self backgroundControl] setEnabled:NO];
@@ -443,7 +456,6 @@
     }
     else
     {
-        [self setUserInteractionEnabled:NO];
         if( [self containedControllerParentView_Constraint_CenterX] != nil )
         {
             [[self containedControllerParentView_Constraint_CenterX] setConstant:[self animation_Hidden_Center].x];
