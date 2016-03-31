@@ -24,6 +24,8 @@
 -(void)setBackgroundControlColor:(UIColor*_Nonnull)newBackgroundControlColor;
 -(UIColor*_Nonnull)backgroundControlColor;
 
+@property (nonatomic,getter=isDismissFromBackgroundControlAllowed) BOOL dismissFromBackgroundControlAllowed;
+
 #pragma mark - Contained controller
 
 -(UIViewController* _Nullable)containedController;

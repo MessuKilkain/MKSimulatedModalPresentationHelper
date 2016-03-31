@@ -111,6 +111,8 @@
     [self setAnimation_Show_Duration:0.3];
     
     [self setBackgroundControlColor:[UIColor clearColor]];
+    
+    [self setDismissFromBackgroundControlAllowed:YES];
 }
 
 -(void)initSubviewsIfNecessary
@@ -152,8 +154,11 @@
 
 -(void)backgroundControlTriggered
 {
-    NSLog(@"backgroundControlTriggered : ENTER");
-    if( [self containedController] != nil )
+    // NSLog(@"backgroundControlTriggered : ENTER");
+    if(
+       [self containedController] != nil
+       && [self isDismissFromBackgroundControlAllowed]
+       )
     {
         [[self containedController] dismissFromSimulatedModalPresentationHelper];
     }
