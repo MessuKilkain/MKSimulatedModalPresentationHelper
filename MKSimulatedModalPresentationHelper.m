@@ -12,6 +12,8 @@
 
 @property (nonatomic) BOOL shouldBeDisplayed;
 
+@property (nonatomic) BOOL internalUseBlurEffect;
+@property (nonatomic) UIBlurEffectStyle internalBlurEffectStyle;
 @property (nonatomic) CGPoint internalAnimation_Displayed_Center;
 @property (nonatomic, strong) UIColor* internalBackgroundControlColor;
 
@@ -53,6 +55,42 @@
 -(CGPoint)animation_Displayed_Center
 {
     return [self internalAnimation_Displayed_Center];
+}
+
+-(void)setUseBlurEffect:(BOOL)shouldUseBlurEffect
+{
+    [self setInternalUseBlurEffect:shouldUseBlurEffect];
+    [self initSubviewsIfNecessary];
+    if( [self backgroundBlurView] != nil )
+    {
+        [[self backgroundBlurView] setHidden:(![self useBlurEffect])&&[self shouldBeDisplayed]];
+    }
+}
+-(BOOL)useBlurEffect
+{
+    return [self internalUseBlurEffect];
+}
+-(void)setBlurEffectStyle:(UIBlurEffectStyle)newBlurEffectStyle
+{
+    UIBlurEffectStyle oldBlurEffectStyle = [self blurEffectStyle];
+    [self setInternalBlurEffectStyle:newBlurEffectStyle];
+    if( oldBlurEffectStyle != [self blurEffectStyle] )
+    {
+        if( [self backgroundBlurView] != nil )
+        {
+            if( [[self backgroundBlurView] superview] != nil )
+            {
+                [[self backgroundBlurView] removeFromSuperview];
+            }
+            [self setBackgroundBlurView:nil];
+        }
+        // NOTE : we force the blur effect view to be recreated
+        [self initSubviewsIfNecessary];
+    }
+}
+-(UIBlurEffectStyle)blurEffectStyle
+{
+    return [self internalBlurEffectStyle];
 }
 
 -(void)setBackgroundControlColor:(UIColor*_Nonnull)newBackgroundControlColor
@@ -117,8 +155,29 @@
 
 -(void)initSubviewsIfNecessary
 {
-    // TODO : add blur view
     // backgroundBlurView
+    if( [self backgroundBlurView] == nil )
+    {
+        // If the system is at least iOS 8.0
+        if( [[[UIDevice currentDevice] systemVersion] compare:@"8.0" options:NSNumericSearch] != NSOrderedAscending )
+        {
+            if( !UIAccessibilityIsReduceTransparencyEnabled() )
+            {
+                UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:[self blurEffectStyle]];
+                UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+                [blurEffectView setTranslatesAutoresizingMaskIntoConstraints:NO];
+                [self addSubview:blurEffectView];
+                [blurEffectView pinToSuperviewEdges:(JRTViewPinAllEdges) inset:0];
+                [self setBackgroundBlurView:blurEffectView];
+                [blurEffectView setHidden:(![self useBlurEffect])&&[self shouldBeDisplayed]];
+            }
+        }
+    }
+    if( [self backgroundBlurView] != nil )
+    {
+        [self bringSubviewToFront:[self backgroundBlurView]];
+    }
+    // backgroundControl
     if( [self backgroundControl] == nil )
     {
         UIControl* backgroundControl = [UIControl autoLayoutView];
@@ -373,6 +432,10 @@
                  {
                      [[strongSelf containedControllerParentView] setAlpha:1.0];
                  }
+                 if( [strongSelf backgroundBlurView] != nil )
+                 {
+                     [[strongSelf backgroundBlurView] setHidden:![strongSelf useBlurEffect]];
+                 }
                  [strongSelf layoutIfNeeded];
              }
          }
@@ -401,6 +464,10 @@
         if( [self containedControllerParentView] != nil )
         {
             [[self containedControllerParentView] setAlpha:1.0];
+        }
+        if( [self backgroundBlurView] != nil )
+        {
+            [[self backgroundBlurView] setHidden:![self useBlurEffect]];
         }
         [self layoutIfNeeded];
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -456,6 +523,10 @@
                  {
                      [[strongSelf containedControllerParentView] setAlpha:[strongSelf animation_Hidden_Alpha]];
                  }
+                 if( [strongSelf backgroundBlurView] != nil )
+                 {
+                     [[strongSelf backgroundBlurView] setHidden:YES];
+                 }
                  [strongSelf layoutIfNeeded];
              }
          }
@@ -484,6 +555,10 @@
         if( [self containedControllerParentView] != nil )
         {
             [[self containedControllerParentView] setAlpha:[self animation_Hidden_Alpha]];
+        }
+        if( [self backgroundBlurView] != nil )
+        {
+            [[self backgroundBlurView] setHidden:YES];
         }
         [self layoutIfNeeded];
         dispatch_async(dispatch_get_main_queue(), ^{

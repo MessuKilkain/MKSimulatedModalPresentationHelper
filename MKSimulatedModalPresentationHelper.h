@@ -21,6 +21,10 @@
 @property (nonatomic) NSTimeInterval animation_Hide_Duration;
 @property (nonatomic) NSTimeInterval animation_Show_Duration;
 
+-(void)setUseBlurEffect:(BOOL)shouldUseBlurEffect;
+-(BOOL)useBlurEffect;
+-(void)setBlurEffectStyle:(UIBlurEffectStyle)newBlurEffectStyle;
+-(UIBlurEffectStyle)blurEffectStyle;
 -(void)setBackgroundControlColor:(UIColor*_Nonnull)newBackgroundControlColor;
 -(UIColor*_Nonnull)backgroundControlColor;
 
