@@ -10,6 +10,7 @@
 
 @interface MKSimulatedModalPresentationHelper()
 
+@property (nonatomic) BOOL shouldBeDisplayed;
 
 @property (nonatomic, strong) UIColor* internalBackgroundControlColor;
 @property (nonatomic) CGPoint internalAnimation_Displayed_Center;
@@ -311,6 +312,7 @@
 
 -(void)playAnimationShowWithCompletionBlock:(void (^ __nullable)(BOOL finished))completion
 {
+    [self setShouldBeDisplayed:YES];
     if( [self backgroundControl] != nil )
     {
         [[self backgroundControl] setUserInteractionEnabled:YES];
@@ -406,6 +408,7 @@
 }
 -(void)playAnimationHideWithCompletionBlock:(void (^ __nullable)(BOOL finished))completion
 {
+    [self setShouldBeDisplayed:NO];
     if( [self backgroundControl] != nil )
     {
         [[self backgroundControl] setUserInteractionEnabled:NO];
