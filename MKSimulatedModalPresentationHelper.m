@@ -530,7 +530,23 @@
                  [strongSelf layoutIfNeeded];
              }
          }
-         completion:completion
+         completion:^(BOOL finished) {
+             if( weakSelf != nil )
+             {
+                 __strong __typeof(weakSelf) strongSelf = weakSelf;
+                 if(
+                    [strongSelf mkSimulatedModalPresentationHelperDelegate] != nil
+                    && [[strongSelf mkSimulatedModalPresentationHelperDelegate] respondsToSelector:@selector(mkSimulatedModalPresentationHelperDidHide:)]
+                    )
+                 {
+                     [[strongSelf mkSimulatedModalPresentationHelperDelegate] mkSimulatedModalPresentationHelperDidHide:strongSelf];
+                 }
+             }
+             if( completion != nil )
+             {
+                 completion(finished);
+             }
+         }
          ];
     }
     else
@@ -561,7 +577,19 @@
             [[self backgroundBlurView] setHidden:YES];
         }
         [self layoutIfNeeded];
+        __weak __typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
+            if( weakSelf != nil )
+            {
+                __strong __typeof(weakSelf) strongSelf = weakSelf;
+                if(
+                   [strongSelf mkSimulatedModalPresentationHelperDelegate] != nil
+                   && [[strongSelf mkSimulatedModalPresentationHelperDelegate] respondsToSelector:@selector(mkSimulatedModalPresentationHelperDidHide:)]
+                   )
+                {
+                    [[strongSelf mkSimulatedModalPresentationHelperDelegate] mkSimulatedModalPresentationHelperDidHide:strongSelf];
+                }
+            }
             if( completion != nil )
             {
                 completion(YES);

@@ -8,7 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+@class MKSimulatedModalPresentationHelper;
+
+@protocol MKSimulatedModalPresentationHelperDelegate <NSObject>
+
+@optional
+
+-(void)mkSimulatedModalPresentationHelperDidHide:(MKSimulatedModalPresentationHelper*_Nonnull)mkSimulatedModalPresentationHelper;
+
+@end
+
 @interface MKSimulatedModalPresentationHelper : UIView
+
+#pragma mark - Delegate
+
+@property (nonatomic, weak) NSObject<MKSimulatedModalPresentationHelperDelegate>* __nullable mkSimulatedModalPresentationHelperDelegate;
 
 #pragma mark - Animation Properties
 
