@@ -36,6 +36,8 @@
 
 @property (nonatomic, weak) UIViewController* containedController;
 
+@property (nonatomic, weak) UITapGestureRecognizer* menuTapGestureRecognizer;
+
 @end
 
 @implementation MKSimulatedModalPresentationHelper
@@ -153,10 +155,20 @@
     [self setBackgroundControlColor:[UIColor clearColor]];
     
     [self setDismissFromBackgroundControlAllowed:YES];
+    [self setDismissFromMenuTapAllowed:YES];
 }
 
 -(void)initSubviewsIfNecessary
 {
+    // menuTapGestureRecognizer for tvOS
+    if( [self menuTapGestureRecognizer] == nil )
+    {
+        // Add a tap gesture recognizer to handle MENU presses.
+        UITapGestureRecognizer *menuTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleMenuTap:)];
+        [self setMenuTapGestureRecognizer:menuTapGestureRecognizer];
+        [menuTapGestureRecognizer setAllowedPressTypes:@[@(UIPressTypeMenu)]];
+        [self addGestureRecognizer:menuTapGestureRecognizer];
+    }
     // backgroundBlurView
     if( [self backgroundBlurView] == nil )
     {
@@ -212,7 +224,19 @@
     }
 }
 
-#pragma mark -
+#pragma mark - Dismiss methods
+
+- (void)handleMenuTap:(UITapGestureRecognizer *)sender
+{
+    NSLog(@"handleMenuTap ENTER : %@",sender);
+    if(
+       [self containedController] != nil
+       && [self isDismissFromMenuTapAllowed]
+       )
+    {
+        [[self containedController] dismissFromSimulatedModalPresentationHelper];
+    }
+}
 
 -(void)backgroundControlTriggered
 {

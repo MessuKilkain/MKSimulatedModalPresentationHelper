@@ -43,6 +43,7 @@
 -(UIColor*_Nonnull)backgroundControlColor;
 
 @property (nonatomic,getter=isDismissFromBackgroundControlAllowed) BOOL dismissFromBackgroundControlAllowed;
+@property (nonatomic,getter=isDismissFromMenuTapAllowed) BOOL dismissFromMenuTapAllowed;
 
 #pragma mark - Contained controller
 
