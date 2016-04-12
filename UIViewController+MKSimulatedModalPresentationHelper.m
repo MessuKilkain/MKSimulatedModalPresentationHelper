@@ -140,7 +140,9 @@
         [controller didMoveToParentViewController:self];
         
         [mkView playAnimationShowWithCompletionBlock:nil];
+#if TARGET_OS_TV
         [subview setNeedsFocusUpdate];
+#endif
         return mkView;
     }
     else
