@@ -36,7 +36,9 @@
 
 @property (nonatomic, weak) UIViewController* containedController;
 
+#if TARGET_OS_TV
 @property (nonatomic, weak) UITapGestureRecognizer* menuTapGestureRecognizer;
+#endif
 
 @end
 
@@ -160,6 +162,7 @@
 
 -(void)initSubviewsIfNecessary
 {
+#if TARGET_OS_TV
     // menuTapGestureRecognizer for tvOS
     if( [self menuTapGestureRecognizer] == nil )
     {
@@ -169,6 +172,7 @@
         [menuTapGestureRecognizer setAllowedPressTypes:@[@(UIPressTypeMenu)]];
         [self addGestureRecognizer:menuTapGestureRecognizer];
     }
+#endif
     // backgroundBlurView
     if( [self backgroundBlurView] == nil )
     {
@@ -226,6 +230,7 @@
 
 #pragma mark - Dismiss methods
 
+#if TARGET_OS_TV
 - (void)handleMenuTap:(UITapGestureRecognizer *)sender
 {
     NSLog(@"handleMenuTap ENTER : %@",sender);
@@ -237,6 +242,7 @@
         [[self containedController] dismissFromSimulatedModalPresentationHelper];
     }
 }
+#endif
 
 -(void)backgroundControlTriggered
 {
