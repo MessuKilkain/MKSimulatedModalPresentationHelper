@@ -547,7 +547,7 @@
         [self layoutIfNeeded];
         __weak __typeof(self) weakSelf = self;
         [UIView
-         animateWithDuration:[self animation_Show_Duration]
+         animateWithDuration:[self animation_Hide_Duration]
          animations:^{
              if( weakSelf != nil )
              {
