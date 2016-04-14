@@ -390,6 +390,7 @@
              multiplier:1.0
              constant:size.width
              ];
+            [widthConstraint setPriority:(UILayoutPriorityRequired-1)];
             [self addConstraint:widthConstraint];
             [self setContainedControllerParentView_Constraint_Width:widthConstraint];
         }
@@ -405,6 +406,7 @@
              multiplier:1.0
              constant:size.height
              ];
+            [heightConstraint setPriority:(UILayoutPriorityRequired-1)];
             [self addConstraint:heightConstraint];
             [self setContainedControllerParentView_Constraint_Height:heightConstraint];
         }
