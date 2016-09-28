@@ -455,7 +455,10 @@
         {
             [[self containedControllerParentView] setAlpha:0.0];
         }
-        [self layoutIfNeeded];
+        if( nil != [self superview] )
+        {
+            [[self superview] layoutIfNeeded];
+        }
         __weak __typeof(self) weakSelf = self;
         [UIView
          animateWithDuration:[self animation_Show_Duration]
@@ -487,7 +490,10 @@
                  {
                      [[strongSelf backgroundBlurView] setHidden:![strongSelf useBlurEffect]];
                  }
-                 [strongSelf layoutIfNeeded];
+                 if( nil != [strongSelf superview] )
+                 {
+                     [[strongSelf superview] layoutIfNeeded];
+                 }
              }
          }
          completion:completion
@@ -520,7 +526,10 @@
         {
             [[self backgroundBlurView] setHidden:![self useBlurEffect]];
         }
-        [self layoutIfNeeded];
+        if( nil != [self superview] )
+        {
+            [[self superview] layoutIfNeeded];
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             if( completion != nil )
             {
@@ -546,7 +555,10 @@
         {
             [[self backgroundControl] setEnabled:NO];
         }
-        [self layoutIfNeeded];
+        if( nil != [self superview] )
+        {
+            [[self superview] layoutIfNeeded];
+        }
         __weak __typeof(self) weakSelf = self;
         [UIView
          animateWithDuration:[self animation_Hide_Duration]
@@ -578,7 +590,10 @@
                  {
                      [[strongSelf backgroundBlurView] setHidden:YES];
                  }
-                 [strongSelf layoutIfNeeded];
+                 if( nil != [strongSelf superview] )
+                 {
+                     [[strongSelf superview] layoutIfNeeded];
+                 }
              }
          }
          completion:^(BOOL finished) {
@@ -627,7 +642,10 @@
         {
             [[self backgroundBlurView] setHidden:YES];
         }
-        [self layoutIfNeeded];
+        if( nil != [self superview] )
+        {
+            [[self superview] layoutIfNeeded];
+        }
         __weak __typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
             if( weakSelf != nil )
