@@ -459,6 +459,10 @@
         {
             [[self superview] layoutIfNeeded];
         }
+        else
+        {
+            [self layoutIfNeeded];
+        }
         __weak __typeof(self) weakSelf = self;
         [UIView
          animateWithDuration:[self animation_Show_Duration]
@@ -493,6 +497,10 @@
                  if( nil != [strongSelf superview] )
                  {
                      [[strongSelf superview] layoutIfNeeded];
+                 }
+                 else
+                 {
+                     [strongSelf layoutIfNeeded];
                  }
              }
          }
@@ -530,6 +538,10 @@
         {
             [[self superview] layoutIfNeeded];
         }
+        else
+        {
+            [self layoutIfNeeded];
+        }
         dispatch_async(dispatch_get_main_queue(), ^{
             if( completion != nil )
             {
@@ -558,6 +570,10 @@
         if( nil != [self superview] )
         {
             [[self superview] layoutIfNeeded];
+        }
+        else
+        {
+            [self layoutIfNeeded];
         }
         __weak __typeof(self) weakSelf = self;
         [UIView
@@ -593,6 +609,10 @@
                  if( nil != [strongSelf superview] )
                  {
                      [[strongSelf superview] layoutIfNeeded];
+                 }
+                 else
+                 {
+                     [strongSelf layoutIfNeeded];
                  }
              }
          }
@@ -645,6 +665,10 @@
         if( nil != [self superview] )
         {
             [[self superview] layoutIfNeeded];
+        }
+        else
+        {
+            [self layoutIfNeeded];
         }
         __weak __typeof(self) weakSelf = self;
         dispatch_async(dispatch_get_main_queue(), ^{
