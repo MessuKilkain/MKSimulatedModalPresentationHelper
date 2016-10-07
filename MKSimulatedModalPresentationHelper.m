@@ -453,7 +453,7 @@
         }
         if( [self containedControllerParentView] != nil )
         {
-            [[self containedControllerParentView] setAlpha:0.0];
+            [[self containedControllerParentView] setAlpha:[self animation_Hidden_Alpha]];
         }
         if( nil != [self superview] )
         {
