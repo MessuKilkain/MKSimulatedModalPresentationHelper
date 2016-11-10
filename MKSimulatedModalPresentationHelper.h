@@ -14,6 +14,7 @@
 
 @optional
 
+-(void)mkSimulatedModalPresentationHelperWillHide:(MKSimulatedModalPresentationHelper*_Nonnull)mkSimulatedModalPresentationHelper;
 -(void)mkSimulatedModalPresentationHelperDidHide:(MKSimulatedModalPresentationHelper*_Nonnull)mkSimulatedModalPresentationHelper;
 
 @end

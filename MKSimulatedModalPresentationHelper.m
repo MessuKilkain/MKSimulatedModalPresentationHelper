@@ -553,6 +553,13 @@
 -(void)playAnimationHideWithCompletionBlock:(void (^ __nullable)(BOOL finished))completion
 {
     [self setShouldBeDisplayed:NO];
+    if(
+       [self mkSimulatedModalPresentationHelperDelegate] != nil
+       && [[self mkSimulatedModalPresentationHelperDelegate] respondsToSelector:@selector(mkSimulatedModalPresentationHelperWillHide:)]
+       )
+    {
+        [[self mkSimulatedModalPresentationHelperDelegate] mkSimulatedModalPresentationHelperWillHide:self];
+    }
     if( [self backgroundControl] != nil )
     {
         [[self backgroundControl] setUserInteractionEnabled:NO];
